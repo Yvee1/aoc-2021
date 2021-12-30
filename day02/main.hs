@@ -6,9 +6,9 @@ data Movement = Forward Int
 main :: IO ()
 main = do
   mvmnts <- parseFile
-  putStrLn $ "Part 1: " <> (show ((uncurry (*)) (positionDepth mvmnts)))
+  putStrLn $ "Part 1: " <> show (uncurry (*) (positionDepth mvmnts))
   let (p, d, _) = positionDepthAim mvmnts
-  putStrLn $ "Part 2: " <> (show (p * d))
+  putStrLn $ "Part 2: " <> show (p * d)
 
 positionDepth :: [Movement] -> (Int, Int)
 positionDepth = foldr f (0, 0)
@@ -26,7 +26,7 @@ parseFile :: IO [Movement]
 parseFile = reverse . map parse . lines <$> readFile "input.txt"
 
 parse :: String -> Movement
-parse xs = let ([dir, amnt]) = words xs in
+parse xs = let [dir, amnt] = words xs in
   case dir of
   "forward" -> Forward $ read amnt
   "down"    -> Down $ read amnt
