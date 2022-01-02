@@ -1,4 +1,4 @@
-import Control.Monad
+import Data.List
 import Data.List.Split
 import Lens.Micro
 
@@ -9,8 +9,11 @@ data Line = Line Point Point
 main :: IO ()
 main = do
   input <- getInput
-  putStrLn $ "Part 1: " <> show (answer pointsHV input)
-  putStrLn $ "Part 2: " <> show (answer pointsHVD input)
+  putStrLn $ "Part 1: " <> show (efficient pointsHV input)
+  putStrLn $ "Part 2: " <> show (efficient pointsHVD input)
+
+efficient :: (Line -> [Point]) -> [Line] -> Int
+efficient points ls = length . filter ((>= 2) . length) . group . sort $ concatMap points ls
 
 answer :: (Line -> [Point]) -> [Line] -> Int
 answer points ls = sum . map (length . filter (>= 2)) . 
